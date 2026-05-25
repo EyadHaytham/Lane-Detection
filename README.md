@@ -1,19 +1,19 @@
 # LANE-DETECTION
 
 Computer Vision Lane Detection & Trajectory Tracking (OpenCV + PID)
- Highlights:
+Highlights:
 
 * **Real-time Lane Tracking:** Process live video frames instantly at 30+ frames per second.
 * **Sunlight & Shadow Resistance:** Advanced filtering prevents blinding glare and harsh outdoor shadows from ruining your path.
 * **Smooth Autonomous Steering:** Uses mathematical PID calculations to eliminate aggressive shaking and tire spinouts.
 * **Approachable Structure:** Built so that any first-year engineering student can easily install, read, and understand the code logic.
 
- Overview
+Overview:
 
 This repository contains the computer vision pipeline and real-time tracking scripts used to keep an autonomous outdoor rover perfectly centered within a defined track using a single front-mounted camera sensor. 
 
 
-### ⚠️ The Problem
+### ⚠️ The Problem:
 The main goal is to make the rover drive completely by itself through an outdoor track without crossing the white lines. If any wheel crosses a white boundary, it is an instant disqualification. 
 
 In the real world, doing this with standard distance sensors is impossible because of intense, unpredictable outdoor conditions:
@@ -28,7 +28,7 @@ Your brain automatically calculates the empty space between those lines and know
 
 Our camera software does this exact same thing 30 times every single second to keep the wheels locked into the middle of the track.
 
-🛠️ The Technical Steps
+🛠️ The Technical Steps:
 
 We implement a real-time computer vision pipeline using OpenCV to find the lines and a PID controller to smooth out the steering wheel commands.
 
@@ -67,7 +67,7 @@ while cap.isOpened():
 
 ```
 
- Installation Instructions
+Installation Instructions:
 
 This framework requires Ubuntu 20.04 (Linux) or Windows 10/11 (64-bit) with Python 3 and OpenCV 4 bindings.
 
