@@ -75,6 +75,8 @@ This framework requires Ubuntu 20.04 (Linux) or Windows 10/11 (64-bit) with Pyth
 Open a terminal and run the following setup commands to update your package manager and map core imaging dependencies:
 
 Bash
+
 sudo apt-get update
+
 sudo apt install python3-opencv python3-numpy python3-matplotlib
 
