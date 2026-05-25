@@ -1,4 +1,4 @@
-# MIA-LANE-DETECTION
+LANE-DETECTION
 
 Computer Vision Lane Detection & Trajectory Tracking (OpenCV + PID)
 🌟 Highlights
