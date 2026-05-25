@@ -6,14 +6,11 @@ Computer Vision Lane Detection & Trajectory Tracking (OpenCV + PID)
 * **Real-time Lane Tracking:** Process live video frames instantly at 30+ frames per second.
 * **Sunlight & Shadow Resistance:** Advanced filtering prevents blinding glare and harsh outdoor shadows from ruining your path.
 * **Smooth Autonomous Steering:** Uses mathematical PID calculations to eliminate aggressive shaking and tire spinouts.
-* **Pure Visual Navigation:** Achieves true track centering using a single front camera without relying on external GPS trackers or manual controls.
 * **Approachable Structure:** Built so that any first-year engineering student can easily install, read, and understand the code logic.
 
 ℹ️ Overview
 
-This repository contains the advanced computer vision pipeline and real-time trajectory tracking scripts used to keep an autonomous outdoor rover perfectly centered within a defined track using a single front-mounted camera sensor. 
-
-The goal of this documentation is to convey the quality of the work, explain the engineering decisions behind the design, and make the codebase highly approachable for developers, student engineers, and reviewers looking at the system architecture.
+This repository contains the computer vision pipeline and real-time tracking scripts used to keep an autonomous outdoor rover perfectly centered within a defined track using a single front-mounted camera sensor. 
 
 📋 Problem Statement
 
@@ -22,7 +19,6 @@ The main goal is to make the rover drive completely by itself through an outdoor
 
 In the real world, doing this with standard distance sensors is impossible because of intense, unpredictable outdoor conditions:
 * **Bright Morning Sunlight:** The intense sun creates blinding glare on the track, which oversaturates normal sensors.
-* **Deep Geometric Shadows:** Trees and nearby objects cast dark shadows across the track. Normal code can mistake a shadow edge for a lane line, causing a crash.
 * **Track Distortions:** Rough asphalt, dirt patches, and dust create visual noise that the robot has to ignore.
 
 😊 The Solution (Non-Technical Summary)
