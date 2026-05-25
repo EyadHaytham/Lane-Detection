@@ -62,19 +62,3 @@ ______________________________________________________
 4. Steering Controller
 * **Function:** Runs the PID formulas to turn the steering servo smoothly.
 
-______________________________________________________
-
-COMMON PROBLEMS AND SOLUTIONS
-______________________________________________________
-
-1. Rover Overshoots the Lines
-* **Cause:** The steering reaction is too aggressive, or it isn't braking soon enough when returning to the center.
-* **Solution:** Lower the Proportional (P) value or increase the Derivative (D) dampening force.
-
-2. Losing Track of the Lines Completely
-* **Cause:** Sudden lighting changes or extreme morning glare blinded the camera.
-* **Solution:** Adjust the software's white color filter thresholds to match the outdoor sunlight.
-
-3. Rover Drifts or Pulls to One Side
-* **Cause:** Mechanical wheel misalignment or uneven floor friction.
-* **Solution:** Let the Integral (I) term build up faster to automatically fight off the constant pull.
