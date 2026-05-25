@@ -65,11 +65,12 @@ cap = cv2.VideoCapture(1)
 while cap.isOpened():
     ret, frame = cap.read()
     if not ret:
-        break
-        
+        break    
     edges = ld.canny_edge(frame)
     roi = ld.region_of_interest(edges)
-    # Pipeline isolates vectors, calculates center error, and overlays graphics
+    # Pipeline isolates vectors, calculates center error, and overlays graphic
+
+```
 
 ⬇️ Installation Instructions
 
@@ -80,3 +81,4 @@ Open a terminal and run the following setup commands to update your package mana
 Bash
 sudo apt-get update
 sudo apt install python3-opencv python3-numpy python3-matplotlib
+
