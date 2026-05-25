@@ -1,23 +1,31 @@
-# Autonomous Rover: Camera Lane Detection
+# MIA-LANE-DETECTION
 
-This repository handles the computer vision logic, track tracking, and steering calculations for our autonomous rover using a single front-mounted camera.
+Computer Vision Lane Detection & Trajectory Tracking (OpenCV + PID)
+🌟 Highlights
 
-______________________________________________________
+* **Real-time Lane Tracking:** Process live video frames instantly at 30+ frames per second.
+* **Sunlight & Shadow Resistance:** Advanced filtering prevents blinding glare and harsh outdoor shadows from ruining your path.
+* **Smooth Autonomous Steering:** Uses mathematical PID calculations to eliminate aggressive shaking and tire spinouts.
+* **Pure Visual Navigation:** Achieves true track centering using a single front camera without relying on external GPS trackers or manual controls.
+* **Approachable Structure:** Built so that any first-year engineering student can easily install, read, and understand the code logic.
 
-THE PROBLEM
-______________________________________________________
+ℹ️ Overview
 
-The main goal is to make the rover drive completely by itself through an outdoor track without crossing the white lines. If any wheel crosses a white boundary, it is an instant disqualification.
+This repository contains the advanced computer vision pipeline and real-time trajectory tracking scripts used to keep an autonomous outdoor rover perfectly centered within a defined track using a single front-mounted camera sensor. 
 
-In the real world, doing this with standard distance sensors is impossible because of outdoor conditions:
+The goal of this documentation is to convey the quality of the work, explain the engineering decisions behind the design, and make the codebase highly approachable for developers, student engineers, and reviewers looking at the system architecture.
+
+📋 Problem Statement
+
+### ⚠️ The Problem
+The main goal is to make the rover drive completely by itself through an outdoor track without crossing the white lines. If any wheel crosses a white boundary, it is an instant disqualification. 
+
+In the real world, doing this with standard distance sensors is impossible because of intense, unpredictable outdoor conditions:
 * **Bright Morning Sunlight:** The intense sun creates blinding glare on the track, which oversaturates normal sensors.
 * **Deep Geometric Shadows:** Trees and nearby objects cast dark shadows across the track. Normal code can mistake a shadow edge for a lane line, causing a crash.
 * **Track Distortions:** Rough asphalt, dirt patches, and dust create visual noise that the robot has to ignore.
 
-______________________________________________________
-
-THE EASIEST WAY TO SOLVE IT (NOT TECHNICALLY)
-______________________________________________________
+😊 The Solution (Non-Technical Summary)
 
 Think of it exactly like a human driving a car on the highway. The driver looks out the windshield to see the white lines on the left and right sides of the lane. 
 
@@ -25,40 +33,50 @@ Your brain automatically calculates the empty space between those lines and know
 
 Our camera software does this exact same thing 30 times every single second to keep the wheels locked into the middle of the track.
 
-______________________________________________________
-
-THE WAY I SOLVED IT (TECHNICALLY)
-______________________________________________________
+🛠️ The Technical Steps
 
 We implement a real-time computer vision pipeline using OpenCV to find the lines and a PID controller to smooth out the steering wheel commands.
 
-1. Seeing the Track (OpenCV)
-The front camera feeds video into the software. The code filters out the background environment, blocking out the morning sun glare and dark shadows. This leaves only the pure white pixels of the lane boundaries visible to the system.
+### 1. Seeing the Track (OpenCV)
+The system captures raw frames from the video stream. It processes the visual input using a Gaussian blur filter to eliminate high-frequency noise from rough asphalt textures, followed by a Canny edge detection transformation to map out high-contrast transitions. A tailored triangular Region of Interest (ROI) mask isolates the track directly ahead while deleting extraneous background objects.
 
-2. Finding the Lane Center
-The software calculates the exact position of both the left white line and the right white line at the same time. It then finds the mathematical center between them.
-* **Error Calculation:** The code measures the distance between the camera's center frame and the actual lane center. This distance is called our **Error**.
+### 2. Finding the Lane Center
+Using a Progressive Probabilistic Hough Line Transform (`cv2.HoughLinesP`), the code calculates vectors for structural segments along the track boundaries. These segments are evaluated by their mathematical slopes and intercepts, separating them into distinct left and right lane boundaries.
+* **Error Calculation:** The software computes the absolute midpoint between the boundaries ($X_{lane\_center}$) and measures its distance deviation from the camera lens's true physical center ($X_{camera\_center}$). This numerical pixel gap forms our **Error** metric.
 
-3. Steering Correction (PID Loop)
-The Error value is sent directly to a PID loop which calculates how much to turn the front wheels without causing the rover to shake or spin out:
-* **P (Proportional):** Turns the wheels based on the current drift. Small drift = gentle turn; big drift = sharp turn.
-* **I (Integral):** Fixes long-term drift. If bumpy ground keeps pulling the rover to one side, this adds extra force over time to pull it back to the absolute center.
-* **D (Derivative):** Acts as a steering brake. If the rover turns back toward the center line too quickly, this slows the steering down so it doesn't overshoot the lines.
+### 3. Steering Correction (PID Loop)
+The computed spatial Error string feeds continuously into a localized PID controller to dynamically regulate steering geometry without losing stability:
+* **P (Proportional):** Turns the wheels proportionally based on immediate drift magnitude (minor drift = soft correction; major drift = sharp turn).
+* **I (Integral):** Aggregates residual tracking errors over time to neutralize systemic pulls caused by uneven floor friction or chassis weight imbalances.
+* **D (Derivative):** Computes the instantaneous velocity of recovery to introduce a predictive dampening force, preventing steering overshoots and vehicle spinouts.
 
-______________________________________________________
+🚀 Usage Instructions
 
-MAIN PARTS OF THE VISION SYSTEM
-______________________________________________________
+To run the pipeline and view real-time boundary tracing alongside computed error outputs, execute the central module script:
 
-1. Camera Lens
-* **Function:** Captures the live physical track environment and transfers the image matrix frames to the processor.
+```python
+import cv2
+import lane_detector as ld
 
-2. Image Filter
-* **Function:** Cleans up raw video frames, highlights the white boundaries, and deletes shadows or asphalt noise.
+# Open camera interface capture channel
+cap = cv2.VideoCapture(1)
 
-3. Coordinates Calculator
-* **Function:** Tracks the pixel positions of the lines to locate the exact center of the path.
+# Stream live frame matrices through the tracking pipeline
+while cap.isOpened():
+    ret, frame = cap.read()
+    if not ret:
+        break
+        
+    edges = ld.canny_edge(frame)
+    roi = ld.region_of_interest(edges)
+    # Pipeline isolates vectors, calculates center error, and overlays graphics
 
-4. Steering Controller
-* **Function:** Runs the PID formulas to turn the steering servo smoothly.
+⬇️ Installation Instructions
 
+This framework requires Ubuntu 20.04 (Linux) or Windows 10/11 (64-bit) with Python 3 and OpenCV 4 bindings.
+
+Open a terminal and run the following setup commands to update your package manager and map core imaging dependencies:
+
+Bash
+sudo apt-get update
+sudo apt install python3-opencv python3-numpy python3-matplotlib
