@@ -1,18 +1,17 @@
 # LANE-DETECTION
 
 Computer Vision Lane Detection & Trajectory Tracking (OpenCV + PID)
-🌟 Highlights
+ Highlights:
 
 * **Real-time Lane Tracking:** Process live video frames instantly at 30+ frames per second.
 * **Sunlight & Shadow Resistance:** Advanced filtering prevents blinding glare and harsh outdoor shadows from ruining your path.
 * **Smooth Autonomous Steering:** Uses mathematical PID calculations to eliminate aggressive shaking and tire spinouts.
 * **Approachable Structure:** Built so that any first-year engineering student can easily install, read, and understand the code logic.
 
-ℹ️ Overview
+ Overview
 
 This repository contains the computer vision pipeline and real-time tracking scripts used to keep an autonomous outdoor rover perfectly centered within a defined track using a single front-mounted camera sensor. 
 
-📋 Problem Statement
 
 ### ⚠️ The Problem
 The main goal is to make the rover drive completely by itself through an outdoor track without crossing the white lines. If any wheel crosses a white boundary, it is an instant disqualification. 
@@ -21,7 +20,7 @@ In the real world, doing this with standard distance sensors is impossible becau
 * **Bright Morning Sunlight:** The intense sun creates blinding glare on the track, which oversaturates normal sensors.
 * **Track Distortions:** Rough asphalt, dirt patches, and dust create visual noise that the robot has to ignore.
 
-😊 The Solution (Non-Technical Summary)
+ The Solution (Non-Technical Summary)
 
 Think of it exactly like a human driving a car on the highway. The driver looks out the windshield to see the white lines on the left and right sides of the lane. 
 
@@ -46,7 +45,7 @@ The computed spatial Error string feeds continuously into a localized PID contro
 * **I (Integral):** Aggregates residual tracking errors over time to neutralize systemic pulls caused by uneven floor friction or chassis weight imbalances.
 * **D (Derivative):** Computes the instantaneous velocity of recovery to introduce a predictive dampening force, preventing steering overshoots and vehicle spinouts.
 
-🚀 Usage Instructions
+ Usage Instructions
 
 To run the pipeline and view real-time boundary tracing alongside computed error outputs, execute the central module script:
 
@@ -68,7 +67,7 @@ while cap.isOpened():
 
 ```
 
-⬇️ Installation Instructions
+ Installation Instructions
 
 This framework requires Ubuntu 20.04 (Linux) or Windows 10/11 (64-bit) with Python 3 and OpenCV 4 bindings.
 
